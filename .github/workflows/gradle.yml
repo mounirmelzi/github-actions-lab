@@ -37,3 +37,12 @@ jobs:
         MY_REPO_USERNAME: ${{ secrets.MY_REPO_USERNAME }}
         MY_REPO_PASSWORD: ${{ secrets.MY_REPO_PASSWORD }}
       run: ./gradlew publish
+
+    - name: Slack Notification
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+        webhook-type: webhook-trigger
+        payload: |
+          status: "${{ job.status }}"
+          option: "false"
