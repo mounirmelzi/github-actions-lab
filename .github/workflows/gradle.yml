@@ -55,4 +55,3 @@ jobs:
         webhook-type: incoming-webhook
         payload: |
           status: "${{ job.status }}"
-          option: "false"
