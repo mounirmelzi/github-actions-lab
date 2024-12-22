@@ -39,10 +39,9 @@ jobs:
       run: ./gradlew publish
 
     - name: Slack Notification
-      uses: slackapi/slack-github-action@v2.0.0
+      uses: act10ns/slack@v1
       with:
-        webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
-        webhook-type: webhook-trigger
-        payload: |
-          status: "${{ job.status }}"
-          option: "false"
+        status: ${{ job.status }}
+        steps: ${{ toJson(steps) }}
+        channel: ${{ secrets.SLACK_CHANNEL }}
+      if: always()
