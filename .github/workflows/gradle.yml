@@ -73,17 +73,17 @@ jobs:
           - Triggered By: ${{ github.actor }}
           - Run ID: ${{ github.run_id }}
           - Run URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        html_body: |
-          <html>
-            <body>
-              <h2>Status: <strong>${{ job.status }}</strong></p>
-              <h3>Additional Details:</h3>
-              <ul>
-                <li>Repository: ${{ github.repository }}</li>
-                <li>Branch: ${{ github.ref_name }}</li>
-                <li>Triggered By: ${{ github.actor }}</li>
-                <li>Run ID: <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">View Run</a></li>
-              </ul>
-            </body>
-          </html>
+#        html_body: |
+#          <html>
+#            <body>
+#              <h2>Status: <strong>${{ job.status }}</strong></p>
+#              <h3>Additional Details:</h3>
+#              <ul>
+#                <li>Repository: ${{ github.repository }}</li>
+#                <li>Branch: ${{ github.ref_name }}</li>
+#                <li>Triggered By: ${{ github.actor }}</li>
+#                <li>Run ID: <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">View Run</a></li>
+#              </ul>
+#            </body>
+#          </html>
         priority: normal
