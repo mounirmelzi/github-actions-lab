@@ -49,9 +49,15 @@ jobs:
 
     - name: Slack Notification
       uses: slackapi/slack-github-action@v2.0.0
-      if: always()
       with:
         webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
-        webhook-type: incoming-webhook
+        webhook-type: 'incoming-webhook'
         payload: |
-          status: "${{ job.status }}"
+          {
+            "text": "The GitHub Actions workflow status is: ${{ job.status }}",
+            "attachments": [
+              {
+                "text": "Option: false"
+              }
+            ]
+          }
