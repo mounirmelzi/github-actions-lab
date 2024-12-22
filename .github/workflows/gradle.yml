@@ -38,26 +38,35 @@ jobs:
         MY_REPO_PASSWORD: ${{ secrets.MY_REPO_PASSWORD }}
       run: ./gradlew publish
 
-#    - name: Slack Notification
-#      uses: act10ns/slack@v1
-#      with:
-#        webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-#        status: ${{ job.status }}
-#        steps: ${{ toJson(steps) }}
-#        channel: ${{ secrets.SLACK_CHANNEL }}
-#      if: always()
-
     - name: Slack Notification
       uses: slackapi/slack-github-action@v2.0.0
+      if: always()
       with:
         webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
         webhook-type: 'incoming-webhook'
         payload: |
           {
-            "text": "The GitHub Actions workflow status is: ${{ job.status }}",
+            "text": "*GitHub Actions Workflow Status*",
             "attachments": [
               {
-                "text": "Option: false"
+                "color": "${{ job.status == 'success' && 'good' || 'danger' }}",
+                "title": "Workflow Status: ${{ job.status }}",
+                "text": "The GitHub Actions workflow has completed.",
+                "fields": [
+                  {
+                    "title": "Option",
+                    "value": "false",
+                    "short": true
+                  },
+                  {
+                    "title": "Branch",
+                    "value": "${{ github.ref }}",
+                    "short": true
+                  }
+                ],
+                "footer": "GitHub Actions",
+                "footer_icon": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+                "ts": $(date +%s)
               }
             ]
           }
