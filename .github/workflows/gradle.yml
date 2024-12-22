@@ -52,6 +52,7 @@ jobs:
       if: always()
       with:
         webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
-        channel: ${{ secrets.SLACK_CHANNEL }}
+        webhook-type: incoming-webhook
         payload: |
           status: "${{ job.status }}"
+          option: "false"
