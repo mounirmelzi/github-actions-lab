@@ -41,6 +41,7 @@ jobs:
     - name: Slack Notification
       uses: act10ns/slack@v1
       with:
+        webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
         status: ${{ job.status }}
         steps: ${{ toJson(steps) }}
         channel: ${{ secrets.SLACK_CHANNEL }}
