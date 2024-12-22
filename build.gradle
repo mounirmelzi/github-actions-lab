@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'com.example'
@@ -10,9 +11,25 @@ repositories {
 }
 
 dependencies {
-
+    testImplementation 'io.cucumber:cucumber-java:6.0.0'
+    testImplementation 'io.cucumber:cucumber-junit:6.0.0'
+    testImplementation 'junit:junit:4.12'
 }
 
-test {
+publishing {
+    repositories {
+        maven {
+            url = System.getenv("MY_REPO_URL")
+            credentials {
+                username = System.getenv("MY_REPO_USERNAME")
+                password = System.getenv("MY_REPO_PASSWORD")
+            }
+        }
+    }
 
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
 }

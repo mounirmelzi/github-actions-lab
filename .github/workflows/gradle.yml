@@ -30,3 +30,10 @@ jobs:
 
     - name: Build with Gradle Wrapper
       run: ./gradlew build
+
+    - name: Publish to Maven Repository
+      env:
+        MY_REPO_URL: ${{ secrets.MY_REPO_URL }}
+        MY_REPO_USERNAME: ${{ secrets.MY_REPO_USERNAME }}
+        MY_REPO_PASSWORD: ${{ secrets.MY_REPO_PASSWORD }}
+      run: ./gradlew publish
