@@ -38,11 +38,20 @@ jobs:
         MY_REPO_PASSWORD: ${{ secrets.MY_REPO_PASSWORD }}
       run: ./gradlew publish
 
+#    - name: Slack Notification
+#      uses: act10ns/slack@v1
+#      with:
+#        webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+#        status: ${{ job.status }}
+#        steps: ${{ toJson(steps) }}
+#        channel: ${{ secrets.SLACK_CHANNEL }}
+#      if: always()
+
     - name: Slack Notification
-      uses: act10ns/slack@v1
-      with:
-        webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-        status: ${{ job.status }}
-        steps: ${{ toJson(steps) }}
-        channel: ${{ secrets.SLACK_CHANNEL }}
+      uses: slackapi/slack-github-action@v2.0.0
       if: always()
+      with:
+        webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+        channel: ${{ secrets.SLACK_CHANNEL }}
+        payload: |
+          status: "${{ job.status }}"
