@@ -43,30 +43,16 @@ jobs:
       if: always()
       with:
         webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
-        webhook-type: 'incoming-webhook'
+        webhook-type: incoming-webhook
         payload: |
           {
-            "text": "*GitHub Actions Workflow Status*",
+            "text": "*OGL TP7 - Java CI with Gradle*",
             "attachments": [
               {
-                "color": "${{ job.status == 'success' && 'good' || 'danger' }}",
-                "title": "Workflow Status: ${{ job.status }}",
-                "text": "The GitHub Actions workflow has completed.",
-                "fields": [
-                  {
-                    "title": "Option",
-                    "value": "false",
-                    "short": true
-                  },
-                  {
-                    "title": "Branch",
-                    "value": "${{ github.ref }}",
-                    "short": true
-                  }
-                ],
+                "title": "The GitHub Actions workflow has completed.",
+                "text": "Workflow Status: ${{ job.status }}",
                 "footer": "GitHub Actions",
-                "footer_icon": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-                "ts": $(date +%s)
+                "color": "${{ job.status == 'success' && 'good' || 'danger' }}",
               }
             ]
           }
