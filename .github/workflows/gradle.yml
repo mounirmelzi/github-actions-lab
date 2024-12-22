@@ -56,3 +56,34 @@ jobs:
               }
             ]
           }
+
+    - name: Mail Notification
+      uses: dawidd6/action-send-mail@v4
+      if: always()
+      with:
+        connection_url: ${{ secrets.MAIL_CONNECTION }}
+        from: ${{ secrets.MAIL_FROM }}
+        to: ${{ secrets.MAIL_TO }}
+        subject: "OGL TP7 - Java CI with Gradle"
+        body: |
+          Status: ${{ job.status }}
+          Additional Details:
+          - Repository: ${{ github.repository }}
+          - Branch: ${{ github.ref_name }}
+          - Triggered By: ${{ github.actor }}
+          - Run ID: ${{ github.run_id }}
+          - Run URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        html_body: |
+          <html>
+            <body>
+              <h2>Status: <strong>${{ job.status }}</strong></p>
+              <h3>Additional Details:</h3>
+              <ul>
+                <li>Repository: ${{ github.repository }}</li>
+                <li>Branch: ${{ github.ref_name }}</li>
+                <li>Triggered By: ${{ github.actor }}</li>
+                <li>Run ID: <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">View Run</a></li>
+              </ul>
+            </body>
+          </html>
+        priority: normal
