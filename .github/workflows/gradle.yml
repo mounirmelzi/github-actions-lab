@@ -56,7 +56,7 @@ jobs:
         path: build/reports/jacoco
 
     - name: Run SonarQube Scan
-      run: ./gradlew sonarqube
+      run: ./gradlew sonar
       env:
         SONARQUBE_HOST: ${{ secrets.SONARQUBE_HOST }}
 

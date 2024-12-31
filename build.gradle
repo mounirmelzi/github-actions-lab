@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id("com.github.spacialcircumstances.gradle-cucumber-reporting") version "0.1.25"
     id 'jacoco'
-    id("org.sonarqube") version "4.4.0.3356"
+    id 'org.sonarqube' version '4.4.1.3373'
     id 'maven-publish'
 }
 
@@ -28,7 +28,6 @@ cucumberReports {
 sonarqube {
     properties {
         property "sonar.scm.disabled", "true"
-        property "sonar.projectKey", "TempTest"
         property "sonar.host.url", System.getenv("SONARQUBE_HOST")
     }
 }
