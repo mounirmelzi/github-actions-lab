@@ -40,6 +40,15 @@ jobs:
         name: cucumber-reports
         path: build/reports/cucumber
 
+    - name: Generate JaCoCo Coverage Report
+      run: ./gradlew jacocoTestReport
+
+    - name: Upload JaCoCo Reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: jacoco-reports
+        path: build/reports/jacoco
+
     - name: Publish to Maven Repository
       env:
         MY_REPO_URL: ${{ secrets.MY_REPO_URL }}
