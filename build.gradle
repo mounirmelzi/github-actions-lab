@@ -25,10 +25,17 @@ cucumberReports {
     reports = files('reports/example-report.json')
 }
 
-sonarqube {
+sonar {
     properties {
         property "sonar.scm.disabled", "true"
         property "sonar.host.url", System.getenv("SONARQUBE_HOST")
+        property "sonar.projectKey", "MelziMounir_SIL2_TP7"
+        property "sonar.projectName", "MelziMounir_SIL2_TP7"
+        property "sonar.projectVersion", "1.0"
+        property "sonar.sources", "src/main/java"
+        property "sonar.tests", "src/test/java"
+        property "sonar.java.binaries", "build/classes/java"
+        property "sonar.java.libraries", "build/libs"
     }
 }
 
