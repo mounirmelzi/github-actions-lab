@@ -28,9 +28,6 @@ jobs:
     - name: Give Permission
       run: chmod +x ./gradlew
 
-    - name: Build with Gradle Wrapper
-      run: ./gradlew build
-
     - name: Generate Cucumber Reports
       run: ./gradlew generateCucumberReports
 
@@ -48,6 +45,15 @@ jobs:
       with:
         name: jacoco-reports
         path: build/reports/jacoco
+
+    - name: Build with Gradle Wrapper
+      run: ./gradlew build
+
+    - name: Upload Jar Files
+      uses: actions/upload-artifact@v4
+      with:
+        name: jar-files
+        path: build/libs
 
     - name: Generate Documentation Using Javadoc
       run: ./gradlew javadoc
