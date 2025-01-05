@@ -61,15 +61,23 @@ jobs:
 #        SONARQUBE_HOST: ${{ secrets.SONARQUBE_HOST }}
 
 
-    - name: SonarQube Scan
-      uses: kitabisa/sonarqube-action@master
+    - name: SonarQube Server Scan
+      uses: sonarsource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
+
+    - name: SonarQube Server Quality Gate check
+      id: sonarqube-quality-gate-check
+      uses: sonarsource/sonarqube-quality-gate-action@master
       with:
-        host: ${{ secrets.SONARQUBE_HOST }}
-        login: ${{ secrets.SONARQUBE_LOGIN }}
-        password:  ${{ secrets.SONARQUBE_PASSWORD }}
+        pollingTimeoutSec: 600
+      env:
+        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
 
-
-
+    - name: "Example show SonarQube Server Quality Gate Status value"
+      run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }}"
 
     - name: Build with Gradle Wrapper
       run: ./gradlew build
