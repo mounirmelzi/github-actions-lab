@@ -55,26 +55,22 @@ jobs:
         name: jacoco-reports
         path: build/reports/jacoco
 
-#    - name: Run SonarQube Scan
-#      run: ./gradlew sonar
-#      env:
-#        SONARQUBE_HOST: ${{ secrets.SONARQUBE_HOST }}
+    - name: Run SonarQube Scan
+      run: ./gradlew sonar
+      env:
+        SONARQUBE_HOST: ${{ secrets.SONARQUBE_HOST }}
 
+    - name: SonarQube Server Quality Gate check
+      id: sonarqube-quality-gate-check
+      uses: sonarsource/sonarqube-quality-gate-action@master
+      with:
+        pollingTimeoutSec: 600
+      env:
+        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
 
-    - name: SonarScan
-      uses: koiralaprt/sonarscan@v1.1.4
-
-#    - name: SonarQube Server Quality Gate check
-#      id: sonarqube-quality-gate-check
-#      uses: sonarsource/sonarqube-quality-gate-action@master
-#      with:
-#        pollingTimeoutSec: 600
-#      env:
-#        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
-#        SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
-#
-#    - name: "Example show SonarQube Server Quality Gate Status value"
-#      run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }}"
+    - name: "Example show SonarQube Server Quality Gate Status value"
+      run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }}"
 
     - name: Build with Gradle Wrapper
       run: ./gradlew build
