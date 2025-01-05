@@ -61,12 +61,8 @@ jobs:
 #        SONARQUBE_HOST: ${{ secrets.SONARQUBE_HOST }}
 
 
-    - name: Sonarqube Scan with Gradle Build
-      timeout-minutes: 5
-      env:
-        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
-      uses: trideepnag1911/gradle-build-with-sonarqube@v1.0
+    - name: SonarScan
+      uses: koiralaprt/sonarscan@v1.1.4
 
 #    - name: SonarQube Server Quality Gate check
 #      id: sonarqube-quality-gate-check
