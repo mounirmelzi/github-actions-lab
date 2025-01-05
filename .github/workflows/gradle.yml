@@ -55,10 +55,21 @@ jobs:
         name: jacoco-reports
         path: build/reports/jacoco
 
-    - name: Run SonarQube Scan
-      run: ./gradlew sonar
-      env:
-        SONARQUBE_HOST: ${{ secrets.SONARQUBE_HOST }}
+#    - name: Run SonarQube Scan
+#      run: ./gradlew sonar
+#      env:
+#        SONARQUBE_HOST: ${{ secrets.SONARQUBE_HOST }}
+
+
+    - name: SonarQube Scan
+      uses: kitabisa/sonarqube-action@master
+      with:
+        host: ${{ secrets.SONARQUBE_HOST }}
+        login: ${{ secrets.SONARQUBE_LOGIN }}
+        password:  ${{ secrets.SONARQUBE_PASSWORD }}
+
+
+
 
     - name: Build with Gradle Wrapper
       run: ./gradlew build
