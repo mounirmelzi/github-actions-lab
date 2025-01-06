@@ -61,17 +61,14 @@ jobs:
         SONARQUBE_HOST: ${{ secrets.SONARQUBE_HOST }}
 
     - name: SonarQube Server Quality Gate check
-      id: sonarqube-quality-gate-check
+      id: quality-gate
       uses: sonarsource/sonarqube-quality-gate-action@master
       with:
-        pollingTimeoutSec: 600
         scanMetadataReportFile: build/sonar/report-task.txt
+        pollingTimeoutSec: 600
       env:
-        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
-
-    - name: Example show SonarQube Server Quality Gate Status value
-      run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }}"
+        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
 
     - name: Build with Gradle Wrapper
       run: ./gradlew build
@@ -110,7 +107,7 @@ jobs:
             "attachments": [
               {
                 "title": "The GitHub Actions workflow has completed.",
-                "text": "Workflow Status: ${{ job.status }}",
+                "text": "Workflow Status: ${{ job.status }} | Quality Gate: ${{ steps.quality-gate.outputs.quality-gate-status }}",
                 "footer": "GitHub Actions",
                 "color": "${{ job.status == 'success' && 'good' || 'danger' }}",
               }
@@ -129,6 +126,7 @@ jobs:
           <html>
             <body>
               <h1>Status: <strong>${{ job.status }}</strong></h1>
+              <h1>Quality Gate: <strong>${{ steps.quality-gate.outputs.quality-gate-status }}</strong></h1>
               <h2>Additional Details:</h2>
               <ul>
                 <li>Repository: ${{ github.repository }}</li>
