@@ -107,8 +107,14 @@ jobs:
             "attachments": [
               {
                 "title": "The GitHub Actions workflow has completed.",
-                "text": "Workflow Status: ${{ job.status }} | Quality Gate: ${{ steps.quality-gate.outputs.quality-gate-status }}",
+                "text": "Workflow Status: ${{ job.status }}",
                 "footer": "GitHub Actions",
+                "color": "${{ job.status == 'success' && 'good' || 'danger' }}",
+              },
+              {
+                "title": "SonarQube Quality Gate.",
+                "text": "Status: ${{ steps.quality-gate.outputs.quality-gate-status }}",
+                "footer": "Quality Gate",
                 "color": "${{ job.status == 'success' && 'good' || 'danger' }}",
               }
             ]
@@ -126,9 +132,9 @@ jobs:
           <html>
             <body>
               <h1>Status: <strong>${{ job.status }}</strong></h1>
-              <h1>Quality Gate: <strong>${{ steps.quality-gate.outputs.quality-gate-status }}</strong></h1>
               <h2>Additional Details:</h2>
               <ul>
+                <li>Quality Gate: <strong>${{ steps.quality-gate.outputs.quality-gate-status }}</strong></li>
                 <li>Repository: ${{ github.repository }}</li>
                 <li>Branch: ${{ github.ref_name }}</li>
                 <li>Triggered By: ${{ github.actor }}</li>
