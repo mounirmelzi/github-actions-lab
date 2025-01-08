@@ -127,7 +127,7 @@ jobs:
         connection_url: ${{ secrets.MAIL_CONNECTION }}
         from: ${{ secrets.MAIL_FROM }}
         to: ${{ secrets.MAIL_TO }}
-        subject: "OGL TP7 - Java CI with Gradle"
+        subject: "OGL TP7 - Java CI with Gradle (Github Actions)"
         html_body: |
           <html>
             <body>
